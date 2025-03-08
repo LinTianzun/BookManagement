@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.linlin.mapper.BookMapper">
+    <insert id="addBook">
+        INSERT INTO books (title, author, isbn, publisher, publish_date, category_id, sum) VALUES
+        (#{title}, #{author}, #{isbn}, #{publisher}, #{publishDate},#{categoryId}, #{sum})
+    </insert>
+    <update id="update">
+        UPDATE books set title = #{title},author=#{author},
+        publisher=#{publisher},category_id=#{categoryId},sum =#{sum}
+        where book_id = #{bookId}
+    </update>
+
+
+    <select id="queryAllBooks" resultType="com.linlin.pojo.Book">
+        SELECT b.book_id, b.title, b.author, b.isbn, b.publisher, b.publish_date,  b.category_id,c.category_name, b.sum
+        FROM books b
+        JOIN categories c ON b.category_id = c.category_id
+        ORDER BY b.book_id ASC
+    </select>
+
+    <select id="findBookBySearch" resultType="com.linlin.pojo.Book">
+        SELECT b.book_id, b.title, b.author, b.isbn, b.publisher, b.publish_date,  b.category_id,c.category_name, b.sum
+        FROM books b
+        JOIN categories c ON b.category_id = c.category_id
+        <if test="searTit != null and searTit != ''">
+            WHERE ${searTit} LIKE CONCAT('%', #{searInput}, '%')
+        </if>
+    </select>
+</mapper>

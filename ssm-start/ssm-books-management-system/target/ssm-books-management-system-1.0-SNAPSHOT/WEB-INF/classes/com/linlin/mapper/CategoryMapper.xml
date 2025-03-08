@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.linlin.mapper.CategoryMapper">
+    <insert id="add">
+        INSERT INTO categories (category_name, description) VALUES
+        (#{categoryName}, #{description})
+    </insert>
+
+    <update id="update">
+        update categories set category_name=#{categoryName} ,description=#{description} where category_id =#{categoryId}
+    </update>
+
+    <select id="findCateBySearch" resultType="com.linlin.pojo.Category">
+        SELECT * FROM categories
+        <if test="searInput != null and searInput != ''">
+            WHERE category_name LIKE CONCAT('%', #{searInput}, '%')
+        </if>
+    </select>
+</mapper>

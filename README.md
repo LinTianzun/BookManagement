@@ -12,11 +12,13 @@
 
 登录
 
+![登录](images/login.jpg)
 
 注册
 
+![注册](images/register.jpg)
 
 管理员首页
  
-
+![首页](images/home.jpg)
 
